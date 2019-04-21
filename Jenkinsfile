@@ -12,8 +12,8 @@ pipeline {
             when { branch 'master' } 
             steps {
               withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
-                sshPublisher (  
-                    continueOnError : true,
+                sshPublisher ( 
+                    continueOnError : false,
                     failOnError : true,
                     publishers : [
                         sshPublisher (
