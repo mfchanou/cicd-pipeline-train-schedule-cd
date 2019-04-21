@@ -17,7 +17,7 @@ pipeline {
                     publishers : [
                         sshPublisher (
                             sshCredentials (
-                               username : '$USERNAME'
+                               username : '$USERNAME',
                                encryptedPassphrase :  '$USERPASS'
                             ), 
                             configName : 'staging',
