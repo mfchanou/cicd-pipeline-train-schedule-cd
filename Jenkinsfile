@@ -9,30 +9,32 @@ pipeline {
             }
         }
          stage('staging') {
-            withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
+            steps {
+              withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                 sshPublisher (  
-                    continueOnError : true
-                    failOnError : true 
+                    continueOnError : true,
+                    failOnError : true,
                     publishers : [
                         sshPublisher (
                             sshCredentials (
                                username : '$USERNAME'
                                encryptedPassphrase :  '$USERPASS'
-                            ) 
-                            configName : 'staging'
-                            verbose :  true
+                            ), 
+                            configName : 'staging',
+                            verbose :  true,
                             transfers : [
                                sshTransfer ( 
-                                    sourceFiles : 'dist/trainSchedule.zip'
-                                    removePrefix : 'dist'
-                                    remoteDirectory : '/temp'
+                                    sourceFiles : 'dist/trainSchedule.zip',
+                                    removePrefix : 'dist',
+                                    remoteDirectory : '/temp',
                                     execCommand : 'sudo /usr/bin/systemctl stop train-schedule && sudo rm -r /opt/train-schedule sudo unzip /temp/trainSchedule.zip -d /opt/train-schedule && /usr/bin/systemctl start train-schedule'
                                )     
                             ]
                         )    
                     ] 
                 ) 
-            } 
+               } 
+            }     
         }       
     }
 }
