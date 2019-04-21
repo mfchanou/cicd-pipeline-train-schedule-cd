@@ -17,10 +17,10 @@ pipeline {
                     failOnError : true,
                     publishers : [
                         sshPublisher (
-                            sshCredentials (
+                            sshCredentials : [
                                username : '$USERNAME',
                                encryptedPassphrase :  '$USERPASS'
-                            ), 
+                            ], 
                             configName : 'staging',
                             verbose :  true,
                             transfers : [
